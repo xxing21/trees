@@ -12,13 +12,12 @@ class BST(BinaryTree):
     and in the constructor below.
     '''
 
-    def __init__(self, root=None, xs=None):
+    def __init__(self, xs=None):
         '''
         If xs is a list (i.e. xs is not None),
         then each element of xs needs to be inserted into the BST.
         '''
-        super().__init__(root)
-        #self.root = None
+        self.root = None
         if xs:
             self.insert_list(xs)
 
@@ -139,8 +138,8 @@ class BST(BinaryTree):
             return BST._find(value, node.left)
         if value == node.value:
             return True
-        else:
-            return False
+
+
 
 
     def find_smallest(self):
