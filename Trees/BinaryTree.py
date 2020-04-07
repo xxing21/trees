@@ -327,6 +327,7 @@ class BinaryTree():
         right_height = BinaryTree._height(node.right)
         return 1 + max(left_height, right_height)
 
+'''
 # Set up tree:
 #         1
 #        / \
@@ -357,3 +358,4 @@ print(tree.size_(tree.root))
 # tree.root.right.right = Node(9)
 # tree.root.right.right.left = Node(4)
 # print(tree.print_tree('postorder'))
+'''
