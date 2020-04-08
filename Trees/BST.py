@@ -17,10 +17,10 @@ class BST(BinaryTree):
         If xs is a list (i.e. xs is not None),
         then each element of xs needs to be inserted into the BST.
         '''
+        super().__init__()
         self.root = None
         if xs:
             self.insert_list(xs)
-
 
     def __repr__(self):
         '''
