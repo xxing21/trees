@@ -60,7 +60,7 @@ def test__Heap_is_heap_satisified6():
     heap.root.right = Node(1)
     heap.root.right.left = Node(4)
     heap.root.right.right = Node(-1)
-    assert heap.is_heap_satisfied()
+    assert not heap.is_heap_satisfied()
 
 ################################################################################
 
