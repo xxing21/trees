@@ -43,26 +43,18 @@ class Heap(BinaryTree):
 
     @staticmethod
     def _is_heap_satisfied(node):
-        '''
-        FIXME:
-        Implement this method.
-        '''
+
         is_left_satisfied = True
         is_right_satisfied = True
 
         if node is None:
             return True
+
         if node.left:
-            if node.value <= node.left.value:
-                return False
-            else:
-                is_left_satisfied = Heap._is_heap_satisfied(node.left)
+            is_left_satisfied = node.left.value >= node.value and Heap._is_heap_satisfied(node.left)
 
         if node.right:
-            if node.value <= node.right.value:
-                return False
-            else:
-                is_right_satisfied = Heap._is_heap_satisfied(node.right)
+            is_right_satisfied = node.right.value >= node.value and Heap._is_heap_satisfied(node.right)
 
         return is_right_satisfied and is_left_satisfied
 
@@ -129,14 +121,22 @@ class Heap(BinaryTree):
         Removes the minimum value from the Heap.
         If the heap is empty, it does nothing.
         '''
-        self.root.value = Heap._remove_last_element(self.root)
-        if not Heap._is_heap_satisfied(self.root):
-            Heap._swap(self.root)
+        if self.root is None:
+            pass
+        elif self.root and self.root.left is None:
+            self.root = None
+        elif self.root and self.root.left:
+            self.root.value = Heap._remove_last_element(self.root)
+            if not Heap._is_heap_satisfied(self.root):
+                Heap._swap(self.root)
 
 
     @staticmethod
     def _remove_last_element(node):
         binary = "{0:b}".format(node.descendents)
+        node.descendents -= 1
+        if len(binary) == 1:
+            node = None
         if len(binary) == 2:
             if binary[1] == '1':
                 tmp = node.right
@@ -150,7 +150,6 @@ class Heap(BinaryTree):
                 return Heap._remove_last_element(node.left)
             elif binary[1] == '1':
                 return Heap._remove_last_element(node.right)
-        node.descendents -= 1
 
 
     @staticmethod
@@ -163,12 +162,13 @@ class Heap(BinaryTree):
         else:
             if node.left.value < node.right.value:
                 node.value, node.left.value = node.left.value, node.value
-                if not Heap._is_heap_satisfied(node.left):
+                if not Heap._is_heap_satisfied(node):
                     Heap._swap(node.left)
             else:
                 node.value, node.right.value = node.right.value, node.value
-                if not Heap._is_heap_satisfied(node.right):
+                if not Heap._is_heap_satisfied(node):
                     Heap._swap(node.right)
+
 
 '''
 heap = Heap()
@@ -183,7 +183,25 @@ heap.insert(8)
 heap.insert(9)
 heap.insert(10)
 heap.insert(11)
-print(heap)
+print(heap.print_tree('inorder'))
 heap.remove_min()
-print(heap)
+print(heap.print_tree('inorder'))
+'''
+'''
+    def _insert(value, node):
+        if node.left is None:
+            node.left = Node(value)
+        elif node.right is None:
+            node.right = Node(value)
+        else:
+            node1=node
+            size = Heap.size(node)
+            level = math.floor(math.log(size+1)/math.log(2)- 1)
+            offset = size - (2**(level+ 1)-1)
+            maxi = 2**level
+            if offset <= maxi/2:
+                node1 = node.left
+            else:
+                node1 = node.right
+            Heap._insert(value,node1)
 '''
